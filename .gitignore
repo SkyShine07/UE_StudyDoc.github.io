@@ -1,0 +1,64 @@
+# Unreal Engine 工程通用忽略规则
+
+# 二进制编译产物（不同环境编译结果不同，无需提交）
+Binaries/
+Plugins/*/Binaries/  # 插件的二进制目录
+Projects/*/Binaries/
+
+# 中间编译文件（构建过程中生成，可重新生成）
+Intermediate/
+Plugins/*/Intermediate/  # 插件的中间文件目录
+Projects/*/Intermediate/
+
+# 运行时缓存与日志（包含本地环境信息，频繁变动）
+Saved/
+Plugins/*/Saved/
+Projects/*/Saved/
+
+# 派生数据缓存（加速加载用，可自动重建）
+DerivedDataCache/
+
+# 打包输出目录（打包结果无需提交，可重新打包）
+Build/
+Packaged/  # 若使用自定义打包目录，可添加此条
+
+# 引擎自动生成的项目文件（IDE配置会随本地环境变化）
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.xcodeproj/
+*.xcworkspace/
+*.opensdf
+*.sdf
+*.suo
+*.db
+*.VC.db
+
+# 编辑器/IDE的本地配置（用户特定设置，无需共享）
+.idea/          # Rider/IntelliJ 配置
+.vs/            # Visual Studio 缓存
+.vscode/        # VS Code 配置
+*.DotSettings.user  # Rider 用户设置
+*.code-workspace
+
+# 内容目录中无需提交的文件（如烘焙资源、临时文件）
+Content/Cooked/  # 烘焙后的资源（打包时生成）
+Content/StagedBuilds/
+Content/Temp/
+Content/*.log
+
+# 系统自动生成的垃圾文件
+Thumbs.db       # Windows 缩略图缓存
+.DS_Store       # macOS 资源叉文件
+._*             # macOS 隐藏文件
+*.swp           # Vim 临时文件
+*.swo
+*~              # 临时备份文件
+*.tmp
+*.bak
+
+# 其他临时文件
+Logs/
+*.log
+*.pdb  # 调试符号（除非需要调试特定版本，否则无需提交）
