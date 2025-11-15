@@ -350,6 +350,24 @@ public:
 	UFUNCTION(BlueprintCallable,Category="replay",meta=(DefaultToSelf="WorldContextObject"))
 	static void StopReplay(UObject* WorldContextObject );
 
+
+	/*
+	 * ****************** 数学计算 *********************
+	 * 
+	 */
+
+
+	// 计算当前actor前方锥形范围内等间隔的点
+	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static TArray<FVector> GetPointsInConeByEnvQueryGenerator(AActor* TargetActor, float InConeDegreesValue=60,
+		float AlignedPointDistanceValue=20,float AngleStepValue=20,float GenerationRange=20);
+
+	// 计算当前actor前方锥形范围内等间隔的点
+	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static TArray<FVector> GetPointsInConeByEnvQueryGeneratorWithParam(FVector ActorLocation, FVector ForwardVector,float InConeDegreesValue=60,
+		float AlignedPointDistanceValue=20,float AngleStepValue=20,float GenerationRange=20);
+
+	
 };
 
 

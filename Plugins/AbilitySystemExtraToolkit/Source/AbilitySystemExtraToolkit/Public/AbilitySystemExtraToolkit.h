@@ -9,6 +9,7 @@
 namespace EventTagExtra
 {
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayEvent_Hit);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameplayEvent_Shoot);
 	
 }
 

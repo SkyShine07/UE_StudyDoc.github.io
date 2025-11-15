@@ -697,6 +697,84 @@ void UBFL_extraToolKit::StopReplay(UObject* WorldContextObject)
 	
 }
 
+TArray<FVector> UBFL_extraToolKit::GetPointsInConeByEnvQueryGenerator(AActor* TargetActor, float InConeDegreesValue,float AlignedPointDistanceValue,
+		float AngleStepValue,float GenerationRange)
+{
+	if (!TargetActor)
+	{
+		return TArray<FVector>();
+		
+	}
+	
+	const float ConeDegreesValue = FMath::Clamp(InConeDegreesValue, 0.f, 359.f);
+	
+	if (ConeDegreesValue == 0)
+	{
+		return TArray<FVector>();
+	}
+	
+	const int32 MaxPointsPerAngleValue = FMath::FloorToInt(GenerationRange / AlignedPointDistanceValue);
+
+	TArray<FVector> GeneratedItems;
+	GeneratedItems.Reserve( FMath::CeilToInt(ConeDegreesValue / AngleStepValue) * MaxPointsPerAngleValue + 1);
+
+	//Generate points for each actor
+
+		const FVector ForwardVector =TargetActor->GetActorForwardVector();
+		const FVector ActorLocation = TargetActor->GetActorLocation();
+		
+		for (float Angle = -(ConeDegreesValue * 0.5f); Angle < (ConeDegreesValue * 0.5f); Angle += AngleStepValue)
+		{
+			const FVector AxisDirection = ForwardVector.RotateAngleAxis(Angle, FVector::UpVector);
+
+			// skipping PointIndex == 0 as that's the context's location
+			for (int32 PointIndex = 1; PointIndex <= MaxPointsPerAngleValue; PointIndex++)
+			{
+				const FVector GeneratedLocation = ActorLocation + (AxisDirection * PointIndex * AlignedPointDistanceValue);
+				GeneratedItems.Add(GeneratedLocation);
+			}
+		}
+
+	return GeneratedItems;
+	
+}
+
+TArray<FVector> UBFL_extraToolKit::GetPointsInConeByEnvQueryGeneratorWithParam(FVector ActorLocation, FVector ForwardVector,
+	float InConeDegreesValue, float AlignedPointDistanceValue, float AngleStepValue, float GenerationRange)
+{
+	
+	const float ConeDegreesValue = FMath::Clamp(InConeDegreesValue, 0.f, 359.f);
+	
+	if (ConeDegreesValue == 0)
+	{
+		return TArray<FVector>();
+	}
+	
+	const int32 MaxPointsPerAngleValue = FMath::FloorToInt(GenerationRange / AlignedPointDistanceValue);
+
+	TArray<FVector> GeneratedItems;
+	GeneratedItems.Reserve( FMath::CeilToInt(ConeDegreesValue / AngleStepValue) * MaxPointsPerAngleValue + 1);
+
+	//Generate points for each actor
+
+
+	for (float Angle = -(ConeDegreesValue * 0.5f); Angle < (ConeDegreesValue * 0.5f); Angle += AngleStepValue)
+	{
+		const FVector AxisDirection = ForwardVector.RotateAngleAxis(Angle, FVector::UpVector);
+
+		// skipping PointIndex == 0 as that's the context's location
+		for (int32 PointIndex = 1; PointIndex <= MaxPointsPerAngleValue; PointIndex++)
+		{
+			const FVector GeneratedLocation = ActorLocation + (AxisDirection * PointIndex * AlignedPointDistanceValue);
+			GeneratedItems.Add(GeneratedLocation);
+		}
+	}
+
+	return GeneratedItems;
+	
+}
+
+
 void UBFL_extraToolKit::GotoTimeInSeconds(UObject* WorldContextObject,float TimeInSeconds )
 {
 

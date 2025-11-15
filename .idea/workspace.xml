@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e45a4fe4-329f-48c9-82ab-e60a04ae7507" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Private/Character/GAS_Character.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Public/Character/GAS_Character.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Death/MM_Death_Back_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Death/MM_Death_Front_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Death/MM_Death_Front_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Death/MM_Death_Front_03.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Death/MM_Death_Left_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Death/MM_Death_Right_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Aim/AO_Pistol.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Aim/MF_Pistol_Idle_ADS1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Aim/MF_Pistol_Idle_ADS_AO_CD.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Aim/MF_Pistol_Idle_ADS_AO_CU.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Bwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Bwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Bwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Fwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Fwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jump/MM_Pistol_Jump_Fall_Loop.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jump/MM_Pistol_Jump_RecoveryAdditive.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Jump/MM_Pistol_Jump_Start.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/MF_Pistol_Idle_ADS.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/MM_Pistol_DryFire.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/MM_Pistol_Equip.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/MM_Pistol_Fire.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/MM_Pistol_Fire_Montage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/MM_Pistol_Reload.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Bwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Bwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Bwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Fwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Fwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/AIM/AO_Rifle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/AIM/MM_Rifle_Idle_ADS_AO_CC.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/AIM/MM_Rifle_Idle_ADS_AO_CD.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/AIM/MM_Rifle_Idle_ADS_AO_CU.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Back_Med_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Hvy_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_03.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_04.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Med_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Med_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Bwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Bwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Bwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Fwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Fwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Apex.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Fall_Land.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Fall_Loop.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_RecoveryAdditive.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Start.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Start_Loop.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/MF_Rifle_Idle_ADS.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/MM_Rifle_DryFire.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/MM_Rifle_Equip.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/MM_Rifle_Fire.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/MM_Rifle_Reload.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Bwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Bwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Bwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Fwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Fwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/BS_Idle_Walk_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Bwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Bwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Bwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Fwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Fwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jump/MM_Dash.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jump/MM_Jump.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jump/MM_Land.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Jump/MM_WallJump.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/MM_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Bwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Bwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Bwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Left.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Right.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Materials/M_Mannequin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Materials/Quinn/MI_Quinn_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Materials/Quinn/MI_Quinn_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Meshes/SKM_Manny_Simple.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Meshes/SKM_Quinn_Simple.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Meshes/SK_Mannequin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Rigs/CR_Mannequin_Body.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Rigs/CR_Mannequin_FootIK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Rigs/CR_Mannequin_Procedural.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Rigs/PA_Mannequin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_BN.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_D.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_01_MRA.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_BN.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_D.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_MRA.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Manny/T_Manny_02_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01_D.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01_MRA.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_01_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02_D.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02_MRA.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Quinn/T_Quinn_02_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequins/Textures/Shared/T_UE_Logo_M.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Conrig/CR_ChangeMaterial.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Conrig/M_CRTest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Conrig/SKM_CRTest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Conrig/SK_CRTest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Cursor/FX_Cursor.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Cursor/M_Cursor.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Cursor/SM_CursorMesh.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Cursor/T_Arrow.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TopDown/Blueprints/BP_TopDownCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TopDown/Blueprints/BP_TopDownCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Variant_Strategy/Anims/MF_Emote_FingerGuns.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Variant_Strategy/Anims/MF_Emote_FingerGuns.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Variant_Strategy/Blueprints/BP_StrategyUnit.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Variant_Strategy/Blueprints/BP_StrategyUnit.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Variant_TwinStick/Blueprints/BP_TwinStickCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Variant_TwinStick/Blueprints/BP_TwinStickCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/TopDown/Lvl_TopDown/6/1E/9TC9GP08HGBSUF37RREP60.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/CT_ExampleAbility.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GA_example.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GE_Cooldown_example.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GE_Cost_example.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GE_Damage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GameplayCamera/GC.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GameplayCamera/NewBlueprintCameraDirectorEvaluator.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GameplayCamera/NewCameraAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GameplayCamera/NewCameraAsset1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GameplayCamera/NewCameraAsset2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/GameplayCamera/NewCameraRigAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/Example/TargetActor_Base.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/BPI_Projectile.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/BP_Projectile.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/GA_Shoot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/GA_Shoot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/Instance/GA_Shoot_One.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/Instance/GA_Shoot_One.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/Instance/M_Projectile.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Content/GA/GA_Shoot/Instance/NS_Projectile.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Private/AbilitySystemExtraToolkit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Private/AbilitySystemExtraToolkit.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Private/BFL_extraToolKit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Private/BFL_extraToolKit.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Private/Swidget/LoadScreen_UMG.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Public/AbilitySystemExtraToolkit.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Public/AbilitySystemExtraToolkit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Public/BFL_extraToolKit.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Public/BFL_extraToolKit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Public/Slate/LoadScreen.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/AbilitySystemExtraToolkit/Source/AbilitySystemExtraToolkit/Public/Slate/LoadScreen.h" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="35TJCelIz80oQSqyRCZkOVghTfE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="e45a4fe4-329f-48c9-82ab-e60a04ae7507" name="更改" comment="" />
+      <created>1763128004346</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763128004346</updated>
+      <workItem from="1763128006841" duration="18000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
