@@ -40,14 +40,26 @@ void UBFL_extraToolKit::InitAbilityActorInfo(AActor* OnwerActor, AActor* AvatorA
 
 }
 
+FGameplayAbilitySpecHandle UBFL_extraToolKit::GiveAbilityByClass(AActor* TargetActor,
+	const TSubclassOf<UGameplayAbility> AbilityClass,int32 Level,int32 InputID,UObject* Source)
+{
+	UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	if (!TargetASC)  return FGameplayAbilitySpecHandle();
+
+	bool HasGive=HasGivedAbility(TargetActor,AbilityClass);
+	if (HasGive) return TargetASC->FindAbilitySpecFromClass(AbilityClass)->Handle;
+
+	return TargetASC->GiveAbility(MakeAbilitySpec( AbilityClass,Level, InputID, Source));
+
+}
+
 FGameplayAbilitySpec UBFL_extraToolKit::MakeAbilitySpec(TSubclassOf<UGameplayAbility> AbilityClass,
                                                         int32 Level,int32 InputID,UObject* Source)
 {
 	
 
 	FGameplayAbilitySpec AbilitySpec(AbilityClass,Level,InputID,Source);
-
-
+	
 	return AbilitySpec;
 	
 	
@@ -188,6 +200,17 @@ TArray<FGameplayAbilitySpecHandle> UBFL_extraToolKit::FindAbilitySpecHandle(AAct
 	}
 
 	return AbilitySpecHandles;
+}
+
+bool UBFL_extraToolKit::HasGivedAbility(AActor* TargetActor, const TSubclassOf<UGameplayAbility> AbilityClass)
+{
+	UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	if (!TargetASC||!AbilityClass)  return false ;
+
+	FGameplayAbilitySpec* AbilitySpec=TargetASC->FindAbilitySpecFromClass(AbilityClass);
+
+	return AbilitySpec?true:false;
+
 }
 
 void UBFL_extraToolKit::AddAttributesByClass(AActor* TargetActor, TSubclassOf<UAttributeSet> AttributeSetClass)
@@ -775,6 +798,8 @@ TArray<FVector> UBFL_extraToolKit::GetPointsInConeByEnvQueryGeneratorWithParam(F
 }
 
 
+
+
 void UBFL_extraToolKit::GotoTimeInSeconds(UObject* WorldContextObject,float TimeInSeconds )
 {
 
@@ -808,4 +833,169 @@ void UBFL_extraToolKit::PauseRecordingReplay(UObject* WorldContextObject,bool bP
 }
 
 
+
+float UBFL_extraToolKit::GetNearestActor(AActor* TargetActor, const TArray<AActor*>& CheckActors, AActor*& NearestActor)
+{
+	if (!TargetActor||CheckActors.Num()<= 0) return 0.f;
+	
+	float MinDistance=TNumericLimits<float>::Max();
+
+	for (auto Element : CheckActors)
+	{
+		if (!Element) continue;
+		
+		float Distance=FVector::Distance(TargetActor->GetActorLocation(),Element->GetActorLocation());
+		
+		if (Distance <= MinDistance)
+		{
+			MinDistance = Distance;
+			NearestActor=Element;
+		}
+		
+	}
+	
+	return MinDistance;
+	
+}
+
+
+
+void  UBFL_extraToolKit::SortActorsByDistance(AActor* TargetActor, bool bIsAscending, TArray<AActor*>& CheckActors)
+{
+
+	TArray<AActor*> SortedActors;
+	
+	if (!TargetActor || CheckActors.Num() == 0)
+		return;
+    
+	// 获取目标Actor的位置
+	FVector TargetLocation = TargetActor->GetActorLocation();
+    
+	// 使用Lambda表达式按距离排序（升序）
+		CheckActors.Sort([TargetLocation,bIsAscending](const AActor& A, const AActor& B) {
+		if (!&A || !&B) return false;
+        
+		float DistanceA = FVector::DistSquared(TargetLocation, A.GetActorLocation());
+		float DistanceB = FVector::DistSquared(TargetLocation, B.GetActorLocation());
+        
+		return bIsAscending?DistanceA < DistanceB:DistanceA > DistanceB;
+	});
+
+	
+	
+}
+
+void UBFL_extraToolKit::SplitActorsByDirection(AActor* TargetActor, const TArray<AActor*>& Actors,
+	TArray<AActor*>& LeftActors, TArray<AActor*>& RightActors)
+{
+	LeftActors.Empty();
+	RightActors.Empty();
+    
+	if (!TargetActor || Actors.Num() == 0)
+		return;
+    
+	// 获取目标Actor的朝向和位置
+	FVector TargetForward = TargetActor->GetActorForwardVector();
+	FVector TargetLocation = TargetActor->GetActorLocation();
+    
+	for (AActor* Actor : Actors)
+	{
+		if (!Actor) continue;
+        
+		// 计算从目标指向Actor的向量
+		FVector ToActor = Actor->GetActorLocation() - TargetLocation;
+        
+		// 使用点积判断左右（使用目标Actor的右向量作为参考）
+		// 点积 > 0 表示在右侧，点积 < 0 表示在左侧
+		float DotProduct = FVector::DotProduct(ToActor, TargetActor->GetActorRightVector());
+        
+		if (DotProduct >= 0.0f)
+		{
+			RightActors.Add(Actor);
+		}
+		else
+		{
+			LeftActors.Add(Actor);
+		}
+	}
+}
+
+
+
+// 使用Atan2计算0-360度角度
+float UBFL_extraToolKit::CalculateAngleUsingAtan2(const FVector& ActorLocation, const FVector& TargetLocation, 
+							  const FVector& TargetForward, const FVector& TargetRight)
+{
+	// 计算相对位置向量
+	FVector RelativeVec = ActorLocation - TargetLocation;
+    
+	// 将相对向量转换到目标Actor的局部坐标系
+	float ForwardComponent = FVector::DotProduct(RelativeVec, TargetForward);
+	float RightComponent = FVector::DotProduct(RelativeVec, TargetRight);
+    
+	// 使用Atan2计算角度（返回-180到180度）
+	float Angle = FMath::RadiansToDegrees(FMath::Atan2(RightComponent, ForwardComponent));
+    
+	// 转换为0-360度
+	if (Angle < 0)
+	{
+		Angle += 360.0f;
+	}
+    
+	return Angle;
+}
+
+
+
+float UBFL_extraToolKit::CalculateFullAngle(float DotProduct, const FVector& CrossProduct, const FVector& RightVector)
+{
+	// 基础角度（0-180度）
+	float BaseAngle = FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(DotProduct, -1.0f, 1.0f)));
+    
+	// 使用叉积与右向量的点积判断方向（正值为右侧，负值为左侧）
+	float DirectionDot = FVector::DotProduct(CrossProduct, RightVector);
+    
+	// 如果在左侧（逆时针方向），则角度为360-基础角度
+	if (DirectionDot < 0)
+	{
+		return 360.0f - BaseAngle;
+	}
+    
+	return BaseAngle;
+}
+
+
+void UBFL_extraToolKit::SortActorsByFullViewAngle(AActor* TargetActor, UPARAM(ref)TArray<AActor*>& Actors)
+{
+	if (!TargetActor || Actors.Num() == 0)
+		return;
+    
+	// 获取目标Actor的位置、前向向量和右向量
+	FVector TargetLocation = TargetActor->GetActorLocation();
+	FVector TargetForward = TargetActor->GetActorForwardVector();
+	FVector TargetRight = TargetActor->GetActorRightVector();
+    
+	// 使用Lambda表达式按视角夹角排序（升序，0-360度）
+	Actors.Sort([TargetLocation, TargetForward, TargetRight](const AActor& A, const AActor& B) {
+		if (!&A || !&B) return false;
+        
+		// 计算从目标指向Actor的方向向量
+		FVector ToA = (A.GetActorLocation() - TargetLocation).GetSafeNormal();
+		FVector ToB = (B.GetActorLocation() - TargetLocation).GetSafeNormal();
+        
+		// 计算点积（夹角余弦值）
+		float DotA = FVector::DotProduct(TargetForward, ToA);
+		float DotB = FVector::DotProduct(TargetForward, ToB);
+        
+		// 计算叉积（用于判断左右方向）
+		FVector CrossA = FVector::CrossProduct(TargetForward, ToA);
+		FVector CrossB = FVector::CrossProduct(TargetForward, ToB);
+        
+		// 使用点积和右向量的点积来确定0-360度角度
+		float AngleA = CalculateFullAngle(DotA, CrossA, TargetRight);
+		float AngleB = CalculateFullAngle(DotB, CrossB, TargetRight);
+        
+		return AngleA < AngleB; // 升序排序
+	});
+}
 

@@ -139,6 +139,15 @@ public:
 	 * ************* Ability **********************
 	 */
 
+	//查询可激活的能力
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static bool HasGivedAbility (AActor* TargetActor,const TSubclassOf<UGameplayAbility> AbilityClass);
+
+	//授予一个能力，检查是否已经拥有该技能,不会重复授予
+	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static  FGameplayAbilitySpecHandle GiveAbilityByClass(AActor* TargetActor,const TSubclassOf<UGameplayAbility> AbilityClass,int32 Level,int32 InputID,UObject* Source);
+
+	
 	//制作一个能力句柄
 	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
 	static  FGameplayAbilitySpec MakeAbilitySpec(TSubclassOf<UGameplayAbility> AbilityClass,
@@ -182,6 +191,8 @@ public:
 	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
 	static TArray<FGameplayAbilitySpecHandle> FindAbilitySpecHandle (AActor* TargetActor,EFindAbilityType Type,
 	FGameplayTagQuery TagQuery ,FGameplayTagContainer Tag, int32 InputID);
+
+
 	
 	/*
 	 * ********************  Attribute  ********************
@@ -352,11 +363,15 @@ public:
 
 
 	/*
-	 * ****************** 数学计算 *********************
+	 * ****************** ******* 数学计算  *******************************
 	 * 
 	 */
 
 
+	/*
+	 *  ************  计算 Points ***************
+	 */
+	
 	// 计算当前actor前方锥形范围内等间隔的点
 	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
 	static TArray<FVector> GetPointsInConeByEnvQueryGenerator(AActor* TargetActor, float InConeDegreesValue=60,
@@ -366,6 +381,40 @@ public:
 	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
 	static TArray<FVector> GetPointsInConeByEnvQueryGeneratorWithParam(FVector ActorLocation, FVector ForwardVector,float InConeDegreesValue=60,
 		float AlignedPointDistanceValue=20,float AngleStepValue=20,float GenerationRange=20);
+
+
+	/*
+	 * ******************* 数组Actors的操作 **************
+	 */
+
+	
+	// 计算actor数组中距离TargetActor最近的Actor和距离
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static float GetNearestActor(AActor* TargetActor,const TArray<AActor*>& CheckActors,AActor*& NearestActor);  
+
+	// 根据到TargetActor距离进行排序（bIsAscending：升/降序）
+	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static void  SortActorsByDistance(AActor* TargetActor,bool bIsAscending,UPARAM(ref) TArray<AActor*>& CheckActors);  
+
+	//将Actors按照距离TargetActor的朝向方向将Actors分成左右两个数组LeftActors，RightActors
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static void SplitActorsByDirection(AActor* TargetActor, const TArray<AActor*>& Actors, 
+						   TArray<AActor*>& LeftActors, TArray<AActor*>& RightActors);
+	
+
+
+	// 计算两向量的夹角（0-360）
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit")
+	float CalculateAngleUsingAtan2(const FVector& ActorLocation, const FVector& TargetLocation, 
+							  const FVector& TargetForward, const FVector& TargetRight);
+	
+	// 计算两向量的夹角（0-360）
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit")
+	static float CalculateFullAngle(float DotProduct, const FVector& CrossProduct, const FVector& RightVector);
+	
+	//Actor数组按照TargetActor看向Actor的方向与TargetActor前向向量的0-360度夹角进行排序
+	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
+	static void SortActorsByFullViewAngle(AActor* TargetActor, UPARAM(ref)TArray<AActor*>& Actors);
 
 	
 };
