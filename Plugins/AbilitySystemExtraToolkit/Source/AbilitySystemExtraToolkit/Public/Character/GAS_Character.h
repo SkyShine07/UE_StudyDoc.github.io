@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "GAS_Character.generated.h"
 
+class UExampleAttributeSet;
+class UEnhanceAbilitySystemComponent;
 /**
  * 
  */
@@ -37,7 +39,10 @@ public:
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,Category="GAS")
-	UAbilitySystemComponent* ASC;
+	UEnhanceAbilitySystemComponent* ASC;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,Category="GAS")
+	UExampleAttributeSet* AS;
 
 	UPROPERTY(EditDefaultsOnly,Category="GAS")
 	EGameplayEffectReplicationMode ReplicationMode=EGameplayEffectReplicationMode::Mixed;

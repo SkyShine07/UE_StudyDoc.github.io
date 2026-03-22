@@ -3,12 +3,17 @@
 
 #include "Character/GAS_Character.h"
 
+#include "EnhanceAbilitySystemComponent.h"
+#include "AttributeSets/ExampleAttributeSet.h"
+
 AGAS_Character::AGAS_Character()
 {
 
-	ASC=CreateDefaultSubobject<UAbilitySystemComponent>(FName("ASC"));
-
+	ASC=CreateDefaultSubobject<UEnhanceAbilitySystemComponent>(FName("ASC"));
 	ASC->SetReplicationMode(ReplicationMode);
+	
+	AS=CreateDefaultSubobject<UExampleAttributeSet>(FName("AS"));
+
 	
 }
 

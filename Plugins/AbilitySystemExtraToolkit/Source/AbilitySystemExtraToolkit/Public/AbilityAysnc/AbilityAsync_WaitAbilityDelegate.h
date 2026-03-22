@@ -113,8 +113,10 @@ protected:
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityDelegate OnAbilityCommit;
 
+	/*
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityDelegate AbilitySpecDirtied;
+	*/
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityDelegate OnAbilityEnd;
@@ -138,9 +140,9 @@ protected:
 	void levelUp(int32 AddToLevel)
 	{
 		
-		if(!OwnAbilitySpec) return ;
-		OwnAbilitySpec->Level+=AddToLevel;
-		GetAbilitySystemComponent()->MarkAbilitySpecDirty(*OwnAbilitySpec);
+		if(!GetCurrentAbilitySpec()) return ;
+		GetCurrentAbilitySpec()->Level+=AddToLevel;
+		GetAbilitySystemComponent()->MarkAbilitySpecDirty(*GetCurrentAbilitySpec());
 		
 	};
 
@@ -187,7 +189,7 @@ protected:
 private:
 
 	
-	FGameplayAbilitySpec* OwnAbilitySpec;
+
 	
 	
 };

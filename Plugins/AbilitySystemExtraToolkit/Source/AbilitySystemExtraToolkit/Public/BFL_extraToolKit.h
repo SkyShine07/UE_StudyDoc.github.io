@@ -86,11 +86,12 @@ struct FAbilitySpecInfo
 	UPROPERTY(BlueprintReadOnly)
 	float CoolDownDuration=0;
 	
-	UPROPERTY(BlueprintReadOnly)
-	UAbilitySystemComponent* ASC;
-	
+
 	UPROPERTY(BlueprintReadOnly)
 	TMap<FGameplayAttribute,float> Costs{};
+	
+	UPROPERTY(BlueprintReadOnly)
+	class UEnhanceAbilitySystemComponent* ASC;
 	
 	
 };
@@ -178,10 +179,16 @@ public:
 	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
 	static  void SetRemoveAbilityOnEnd(AActor* TargetActor,FGameplayAbilitySpecHandle AbilitySpecHandle);
 	
-	//技能升级
-	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
-	static  void levelUp(AActor* TargetActor,const FGameplayAbilitySpecHandle& AbilitySpecHandle, int32 AddToLevel=1);
 
+	
+	// 获得AbilitySpec中的信息
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit")
+	static FGameplayAbilitySpecHandle GetHandleFromAbilitySpec(UPARAM(ref)FGameplayAbilitySpec& AbilitySpec);
+	
+	
+	UFUNCTION(BlueprintPure,Category="AbilitySystem|extraToolKit")
+	static const UEnhanceGameplayAbility* GetEnhanceAbility(AActor* Target, FGameplayAbilitySpecHandle Handle) ;
+	
 	
 	//获取可激活的技能一些属性
 	UFUNCTION(BlueprintCallable,BlueprintPure,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
@@ -193,6 +200,8 @@ public:
 	FGameplayTagQuery TagQuery ,FGameplayTagContainer Tag, int32 InputID);
 
 
+
+	
 	
 	/*
 	 * ********************  Attribute  ********************

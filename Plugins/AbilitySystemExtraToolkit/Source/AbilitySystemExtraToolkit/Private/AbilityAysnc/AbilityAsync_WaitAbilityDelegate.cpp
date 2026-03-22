@@ -38,10 +38,6 @@ void UAbilityAsync_WaitAbilityDelegate::Activate()
 
 	if (!GetAbilitySystemComponent()) return ;
 
-	OwnAbilitySpec=GetCurrentAbilitySpec();
-	
-	BindCallBack();
-
 	
 	if (!GetTimerManager())
 	{
@@ -51,6 +47,11 @@ void UAbilityAsync_WaitAbilityDelegate::Activate()
 	
 	UE_LOG(Abilitylog,Warning,TEXT("GetTimerManager() return is valid "));
 
+
+	
+	BindCallBack();
+
+	
 
 		
 	
@@ -154,20 +155,20 @@ FAbilityInfo UAbilityAsync_WaitAbilityDelegate::GetCurrentAbilityInfo()
 {
 	FAbilityInfo AbilityInfo;
 
-	if (!OwnAbilitySpec)
+	if (!GetCurrentAbilitySpec())
 	{
 		return FAbilityInfo();
 	}
 	
-	const FGameplayAbilitySpec& Spec=*OwnAbilitySpec;
+	const FGameplayAbilitySpec& Spec=*GetCurrentAbilitySpec();
 	
 
-	AbilityInfo.name=Spec.GetPrimaryInstance()->GetName();
+	AbilityInfo.name=Spec.Ability->GetName();
 	AbilityInfo.level=Spec.Level;
 	AbilityInfo.ASC=GetAbilitySystemComponent();
 	AbilityInfo.AbilitySpecHandle=Spec.Handle;
 
-	FAbilitySpecInfo AbilitySpecInfo=UBFL_extraToolKit::GetInfoAtAbilitySpecHandle(GetAbilitySystemComponent()->GetOwner(),OwnAbilitySpec->Handle);
+	FAbilitySpecInfo AbilitySpecInfo=UBFL_extraToolKit::GetInfoAtAbilitySpecHandle(GetAbilitySystemComponent()->GetOwner(),GetCurrentAbilitySpec()->Handle);
 
 	AbilityInfo.Costs=AbilitySpecInfo.Costs;
 	AbilityInfo.CoolDownDuration=AbilitySpecInfo.CoolDownDuration;
@@ -190,7 +191,7 @@ void UAbilityAsync_WaitAbilityDelegate::BindCallBack()
 	OnAbilityActiveHandle = GetAbilitySystemComponent()->AbilityActivatedCallbacks.AddLambda([this](UGameplayAbility* Ability)
 		{
 		
-		if (Ability == OwnAbilitySpec->Ability)
+		if (GetCurrentAbilitySpec()&& Ability->GetCurrentAbilitySpec() == GetCurrentAbilitySpec())
 		{
 			
 			OnAbilityActive.Broadcast(GetCurrentAbilityInfo());
@@ -199,10 +200,10 @@ void UAbilityAsync_WaitAbilityDelegate::BindCallBack()
 	});
 
 
-	OnAbilityCommitHandle= GetAbilitySystemComponent()->AbilityCommittedCallbacks.AddLambda([this](UGameplayAbility* Ability)->void
+	OnAbilityCommitHandle= GetAbilitySystemComponent()->AbilityCommittedCallbacks.AddLambda([&](UGameplayAbility* Ability)->void
 
 	{
-		if (Ability==OwnAbilitySpec->GetAbilityInstances().Last())
+		if (GetCurrentAbilitySpec()&& Ability->GetCurrentAbilitySpec()==GetCurrentAbilitySpec())
 		{
 			
 			OnAbilityCommit.Broadcast(GetCurrentAbilityInfo());
@@ -216,24 +217,25 @@ void UAbilityAsync_WaitAbilityDelegate::BindCallBack()
 
 	OnAbilityEndle= GetAbilitySystemComponent()->AbilityEndedCallbacks.AddLambda([this]( UGameplayAbility* Ability)
 	{
-			if (Ability==OwnAbilitySpec->GetAbilityInstances().Last())
+			if (GetCurrentAbilitySpec()&& Ability->GetCurrentAbilitySpec()==GetCurrentAbilitySpec())
 				OnAbilityEnd.Broadcast(GetCurrentAbilityInfo());
 		
 	});
 	
 	OnAbilityFailHandle= GetAbilitySystemComponent()->AbilityFailedCallbacks.AddLambda([this]( const UGameplayAbility* Ability,const FGameplayTagContainer& TagContainer)
 	{
-		if (Ability == OwnAbilitySpec->GetAbilityInstances().Last() )
+		if (GetCurrentAbilitySpec() && Ability->GetCurrentAbilitySpec()==GetCurrentAbilitySpec() )
 			OnAbilityFail.Broadcast(GetCurrentAbilityInfo());
 	});
 
 
 	//判断当自己的能力信息发生变化时，需要更新AbilityInfo
-	
-	AbilitySpecDirtiedHandle= GetAbilitySystemComponent()->AbilitySpecDirtiedCallbacks.AddLambda([this](const FGameplayAbilitySpec& Spec)
+
+	/*
+	AbilitySpecDirtiedHandle= GetAbilitySystemComponent()->AbilitySpecDirtiedCallbacks.AddLambda([&]( const FGameplayAbilitySpec  & Spec)  
 	{
 		
-		if (Spec.GetAbilityInstances().Last()==OwnAbilitySpec->GetAbilityInstances().Last())
+		if (Spec.Handle==GetCurrentAbilitySpec()->Handle)
 		{ 
 			AbilitySpecDirtied.Broadcast(GetCurrentAbilityInfo());
 			
@@ -241,7 +243,7 @@ void UAbilityAsync_WaitAbilityDelegate::BindCallBack()
 		
 
 		
-	});
+	});*/
 
 
 

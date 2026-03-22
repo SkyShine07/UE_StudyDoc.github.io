@@ -9,27 +9,15 @@
 #include "AbilitySystemComponent.h"
 #include "GameplayEffectComponents/TargetTagsGameplayEffectComponent.h"
 #include "AbilitySystemGlobals.h"
+#include "EnhanceAbilitySystemComponent.h"
 #include "GameplayCueManager.h"
 #include "ReplaySubsystem.h"
 #include "Engine/DemoNetDriver.h"
 #include "Engine/OverlapResult.h"
+#include "GameplayAbility/EnhanceGameplayAbility.h"
 #include "Net/ReplayPlaylistTracker.h"
 
-void UBFL_extraToolKit::levelUp(AActor* TargetActor, const FGameplayAbilitySpecHandle& AbilitySpecHandle, int32 AddToLevel)
-{
 
-	UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
-	if (!TargetASC)  return ;
-
-	FGameplayAbilitySpec* TargetAbilitySpec = TargetASC->FindAbilitySpecFromHandle(AbilitySpecHandle);
-	
-	if(!TargetAbilitySpec) return ;
-		
-	TargetAbilitySpec->Level+=AddToLevel;
-	TargetASC->MarkAbilitySpecDirty(*TargetAbilitySpec);
-		
-	
-}
 
 void UBFL_extraToolKit::InitAbilityActorInfo(AActor* OnwerActor, AActor* AvatorActor)
 {
@@ -45,11 +33,11 @@ FGameplayAbilitySpecHandle UBFL_extraToolKit::GiveAbilityByClass(AActor* TargetA
 {
 	UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (!TargetASC)  return FGameplayAbilitySpecHandle();
-
+	 
 	bool HasGive=HasGivedAbility(TargetActor,AbilityClass);
 	if (HasGive) return TargetASC->FindAbilitySpecFromClass(AbilityClass)->Handle;
 
-	return TargetASC->GiveAbility(MakeAbilitySpec( AbilityClass,Level, InputID, Source));
+	return TargetASC->GiveAbility(FGameplayAbilitySpec(AbilityClass,Level,InputID,Source));
 
 }
 
@@ -137,7 +125,7 @@ FAbilitySpecInfo UBFL_extraToolKit::GetInfoAtAbilitySpecHandle(AActor* TargetAct
 	
 	 const FGameplayAbilitySpec& Spec=*TargetASC->FindAbilitySpecFromHandle(AbilitySpecHandle);
 	AbilityInfo.level=Spec.Level;
-	AbilityInfo.ASC=TargetASC;
+	AbilityInfo.ASC=Cast<UEnhanceAbilitySystemComponent>(TargetASC);
 
 	
 	if (const UGameplayAbility* Ability =Spec.GetAbilityInstances().Last())
@@ -200,6 +188,24 @@ TArray<FGameplayAbilitySpecHandle> UBFL_extraToolKit::FindAbilitySpecHandle(AAct
 	}
 
 	return AbilitySpecHandles;
+}
+
+FGameplayAbilitySpecHandle UBFL_extraToolKit::GetHandleFromAbilitySpec(FGameplayAbilitySpec& AbilitySpec)
+{
+	return AbilitySpec.Handle;
+}
+
+const UEnhanceGameplayAbility* UBFL_extraToolKit::GetEnhanceAbility(AActor* Target, FGameplayAbilitySpecHandle Handle) 
+{
+	UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target);
+	if (!TargetASC)  return nullptr;
+	
+	bool Found=false;
+	const UEnhanceGameplayAbility* GA=Cast<UEnhanceGameplayAbility>(UAbilitySystemBlueprintLibrary::GetGameplayAbilityFromSpecHandle(TargetASC,Handle,Found));
+	return GA;
+	
+
+	
 }
 
 bool UBFL_extraToolKit::HasGivedAbility(AActor* TargetActor, const TSubclassOf<UGameplayAbility> AbilityClass)
@@ -353,7 +359,7 @@ FActiveGameplayEffectHandle UBFL_extraToolKit::MakeGameplayEffectCompletedCustom
 
 	// 堆栈策略
 	GameplayEffect->StackDurationRefreshPolicy=EffectStackInfo.EffectStackingDurationPolicy;
-	GameplayEffect->StackingType=EffectStackInfo.EffectStackingType;
+	//GameplayEffect->StackingType=EffectStackInfo.EffectStackingType;
 	GameplayEffect->StackExpirationPolicy=EffectStackInfo.EffectStackingExpirationPolicy;
 	GameplayEffect->StackLimitCount=EffectStackInfo.StackLimitCount;
 	GameplayEffect->StackPeriodResetPolicy=EffectStackInfo.EffectStackingPeriodPolicy;
