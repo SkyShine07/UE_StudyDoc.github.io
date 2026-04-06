@@ -35,6 +35,8 @@ public:
 	ATTRIBUTE_ACCESSORS(ThisClass,Mana);
 	ATTRIBUTE_ACCESSORS(ThisClass,MaxHealth);
 	ATTRIBUTE_ACCESSORS(ThisClass,MaxMana);
+	ATTRIBUTE_ACCESSORS(ThisClass,AttackPower);
+	
 	ATTRIBUTE_ACCESSORS(ThisClass,InComingDamage);
 
 
@@ -46,16 +48,19 @@ public:
 protected:
 
 	UPROPERTY(ReplicatedUsing=OnRep_Health)
-	FGameplayAttributeData Health=100;
+	FGameplayAttributeData Health;
 	
 	UPROPERTY(ReplicatedUsing=OnRep_MaxHealth)
-	FGameplayAttributeData MaxHealth=100;
+	FGameplayAttributeData MaxHealth;
 	
 	UPROPERTY(replicatedUsing=OnRep_Mana)
-	FGameplayAttributeData Mana=100;
+	FGameplayAttributeData Mana;
 	
 	UPROPERTY(replicatedUsing=OnRep_MaxMana)
-	FGameplayAttributeData MaxMana=100;
+	FGameplayAttributeData MaxMana;
+	
+	UPROPERTY(replicatedUsing=OnRep_AttackPower)
+	FGameplayAttributeData AttackPower;
 
 /*
  * ****************元数据***********************
@@ -77,5 +82,7 @@ public:
 	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& Data);
 	
+	UFUNCTION()
+	void OnRep_AttackPower(const FGameplayAttributeData& Data);
 	
 };

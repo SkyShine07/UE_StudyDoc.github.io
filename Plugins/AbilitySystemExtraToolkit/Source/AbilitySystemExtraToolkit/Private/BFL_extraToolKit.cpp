@@ -1005,3 +1005,155 @@ void UBFL_extraToolKit::SortActorsByFullViewAngle(AActor* TargetActor, UPARAM(re
 	});
 }
 
+
+
+
+AActor* UBFL_extraToolKit::SelectBestTarget(
+const TArray<AActor*>& PotentialTargets,const FVector& CameraLocation,const FVector& CameraForward,
+	float LockOnRange,float LockOnAngle,bool bCheckOcclusion ,bool bDebug ,float DebugTime 
+)
+{
+    AActor* BestTarget = nullptr;
+    float BestScore = 0.f;
+
+    for (AActor* Target : PotentialTargets)
+    {
+        if (!Target) continue;
+
+        FVector TargetLocation = Target->GetActorLocation();
+        FVector DirectionToTarget = (TargetLocation - CameraLocation).GetSafeNormal();
+        float DistanceToTarget = FVector::Distance(CameraLocation, TargetLocation);
+        float AngleToTarget = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(CameraForward, DirectionToTarget)));
+
+        // Calculate score regardless of conditions
+        float DistanceScore = 1.f - (DistanceToTarget / LockOnRange);
+        float AngleScore = 1.f - (AngleToTarget / LockOnAngle);
+        float TotalScore = DistanceScore + AngleScore;
+
+        // Occlusion check
+        bool bIsOccluded = false;
+        if (bCheckOcclusion)
+        {
+            FCollisionQueryParams CollisionParams;
+            CollisionParams.AddIgnoredActor(Target); // Ignore the target itself
+            
+            FHitResult HitResult;
+            bIsOccluded = Target->GetWorld()->LineTraceSingleByChannel(
+                HitResult,
+                CameraLocation,
+                TargetLocation,
+                ECC_Visibility,
+                CollisionParams
+            );
+
+            if (bDebug)
+            {
+                // Draw occlusion debug line
+                DrawDebugLine(
+                    Target->GetWorld(),
+                    CameraLocation,
+                    TargetLocation,
+                    bIsOccluded ? FColor::Red : FColor::Green,
+                    false,
+                    DebugTime,
+                    0,
+                    bIsOccluded ? 1.0f : 0.5f
+                );
+            }
+        }
+
+        bool bIsValidTarget = (DistanceToTarget <= LockOnRange) && 
+                            (AngleToTarget <= LockOnAngle) &&
+                            (!bCheckOcclusion || !bIsOccluded);
+
+        if (bDebug)
+        {
+            // Prepare debug text
+            FString Status;
+            FColor TextColor;
+            
+            if (!bIsValidTarget)
+            {
+                if (DistanceToTarget > LockOnRange)
+                {
+                    Status = TEXT("TOO FAR");
+                    TextColor = FColor::Orange;
+                }
+                else if (AngleToTarget > LockOnAngle)
+                {
+                    Status = TEXT("OUT OF ANGLE");
+                    TextColor = FColor::Blue;
+                }
+                else if (bIsOccluded)
+                {
+                    Status = TEXT("OCCLUDED");
+                    TextColor = FColor::Red;
+                }
+            }
+            else
+            {
+                Status = TEXT("VALID");
+                TextColor = FColor::Green;
+            }
+
+            FString DebugText = FString::Printf(TEXT("%s\nDist: %.1f/%.1f\nAngle: %.1f/%.1f\nScore: %.2f\nOccluded: %s"), 
+                *Status,
+                DistanceToTarget, LockOnRange,
+                AngleToTarget, LockOnAngle,
+                TotalScore,
+                bIsOccluded ? TEXT("YES") : TEXT("NO"));
+            
+            FVector TextLocation = TargetLocation + FVector(0, 0, 100);
+            
+            DrawDebugString(
+                Target->GetWorld(),
+                TextLocation,
+                DebugText,
+                nullptr,
+                TextColor,
+                DebugTime,
+                false,
+                1.5f
+            );
+        }
+
+        // Only consider valid targets for selection
+        if (bIsValidTarget && TotalScore > BestScore)
+        {
+            BestScore = TotalScore;
+            BestTarget = Target;
+        }
+    }
+
+    if (bDebug && BestTarget)
+    {
+        // Highlight the best target
+        FVector BestTargetLocation = BestTarget->GetActorLocation();
+        FVector TextLocation = BestTargetLocation + FVector(0, 0, 150);
+        
+        DrawDebugString(
+            BestTarget->GetWorld(),
+            TextLocation,
+            TEXT("<< BEST TARGET >>"),
+            nullptr,
+            FColor::Yellow,
+            DebugTime,
+            0,
+            2.0f
+        );
+        
+        DrawDebugSphere(
+            BestTarget->GetWorld(),
+            BestTargetLocation,
+            50.f,
+            12,
+            FColor::Yellow,
+            false,
+            DebugTime,
+            0,
+            2.0f
+        );
+    }
+
+    return BestTarget;
+}

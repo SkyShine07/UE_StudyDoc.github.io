@@ -425,6 +425,22 @@ public:
 	UFUNCTION(BlueprintCallable,Category="AbilitySystem|extraToolKit",meta=(DefaultToSelf="TargetActor"))
 	static void SortActorsByFullViewAngle(AActor* TargetActor, UPARAM(ref)TArray<AActor*>& Actors);
 
+	/*目标选择算法（角度分数权重70%，距离分数权重30%）
+	1.只选择在有效距离内的目标
+	2.只选择在视角锥形范围内的未遮挡目标
+	3.优先选择更近且在视野中央的目标
+	bDebug 参数控制是否显示调试信息，使用不同颜色表示不同状态：
+	绿色：有效候选目标
+	红色：被遮挡目标
+	橙色：角度不符合要求
+	灰色：距离太远
+	*/
+	UFUNCTION(BlueprintCallable,meta=(DefaultToSelf="Source"))
+	static AActor* SelectBestTarget(const TArray<AActor*>& PotentialTargets,const FVector& CameraLocation,const FVector& CameraForward,
+									float LockOnRange,float LockOnAngle,bool bCheckOcclusion = false,bool bDebug = false,float DebugTime = 3.f);
+	
+	
+
 	
 };
 

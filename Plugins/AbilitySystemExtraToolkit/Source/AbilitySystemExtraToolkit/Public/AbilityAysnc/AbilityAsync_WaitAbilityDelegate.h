@@ -42,7 +42,7 @@ struct FAbilityInfo
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly)
-	FString name=" ";
+	FString ObjectName=" ";
 	
 	UPROPERTY(BlueprintReadOnly)
 	int32 level=1;
@@ -53,16 +53,18 @@ struct FAbilityInfo
 	UPROPERTY(BlueprintReadOnly)
 	float CoolDownDuration=0;
 
+
+	UPROPERTY(BlueprintReadOnly)
+	FGameplayTagContainer AbilityFailTagContainer;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TMap<FGameplayAttribute,float> Costs{};
+	
 	UPROPERTY(BlueprintReadOnly)
 	FGameplayAbilitySpecHandle AbilitySpecHandle;
 
 	UPROPERTY(BlueprintReadOnly)
 	UAbilitySystemComponent* ASC;
-	
-	UPROPERTY(BlueprintReadOnly)
-	TMap<FGameplayAttribute,float> Costs{};
-	
-	
 	
 };
 

@@ -5,6 +5,27 @@
 
 #include "AbilitySystemComponent.h"
 #include "EnhanceAbilitySystemComponent.h"
+#include "NativeGameplayTags.h"
+#include "StructUtils/InstancedStruct.h"
+
+
+UE_DEFINE_GAMEPLAY_TAG(AbilityConfigFragmentTag_UI,"AbilityConfigFragment.UI")
+
+bool UEnhanceGameplayAbility::IsShowInMenu(FAbilityConfigFragment_UI& AbilityConfigFragment_UI)
+{
+	for (TInstancedStruct<FAbilityConfigFragment>& AbilityConfigFragment : AbilityConfigStructs)
+	{
+		FAbilityConfigFragment ConfigFragment=AbilityConfigFragment.Get<FAbilityConfigFragment>();
+		
+		if (ConfigFragment.Tag.IsValid() && ConfigFragment.Tag==AbilityConfigFragmentTag_UI)
+		{
+			AbilityConfigFragment_UI=AbilityConfigFragment.Get<FAbilityConfigFragment_UI>();
+			return true;
+		}
+		
+	}
+	return false;
+}
 
 UGameplayEffect* UEnhanceGameplayAbility::GetCostEffect()
 {
@@ -19,6 +40,11 @@ void UEnhanceGameplayAbility::levelUp(int32 AddToLevel)
 		ASC->levelUp(GetCurrentAbilitySpec()->Handle,AddToLevel);
 	}
 }
+
+/*bool UEnhanceGameplayAbility::NowCanActivateAbility() const
+{
+	return CanActivateAbility(GetCurrentAbilitySpecHandle(),GetCurrentActorInfo());
+}*/
 
 void UEnhanceGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo,
                                             const FGameplayAbilitySpec& Spec)

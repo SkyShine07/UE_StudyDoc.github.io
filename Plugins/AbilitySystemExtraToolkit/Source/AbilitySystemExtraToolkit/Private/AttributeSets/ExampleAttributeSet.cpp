@@ -71,6 +71,8 @@ void UExampleAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProp
 	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass,Mana,COND_None,REPNOTIFY_Always)
 	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass,MaxMana,COND_None,REPNOTIFY_Always)
 	
+	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass,AttackPower,COND_None,REPNOTIFY_Always)
+	
 }
 
 void UExampleAttributeSet::Serialize(FArchive& Ar)
@@ -100,5 +102,11 @@ void UExampleAttributeSet::OnRep_Mana(const FGameplayAttributeData& Data)
 void UExampleAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& Data)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass,MaxMana,Data);
+	
+}
+
+void UExampleAttributeSet::OnRep_AttackPower(const FGameplayAttributeData& Data)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass,AttackPower,Data);
 	
 }

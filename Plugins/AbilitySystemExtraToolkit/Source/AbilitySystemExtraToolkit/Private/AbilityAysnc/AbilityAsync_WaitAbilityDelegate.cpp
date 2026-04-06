@@ -163,7 +163,7 @@ FAbilityInfo UAbilityAsync_WaitAbilityDelegate::GetCurrentAbilityInfo()
 	const FGameplayAbilitySpec& Spec=*GetCurrentAbilitySpec();
 	
 
-	AbilityInfo.name=Spec.Ability->GetName();
+	AbilityInfo.ObjectName=Spec.Ability->GetName();
 	AbilityInfo.level=Spec.Level;
 	AbilityInfo.ASC=GetAbilitySystemComponent();
 	AbilityInfo.AbilitySpecHandle=Spec.Handle;
@@ -215,9 +215,9 @@ void UAbilityAsync_WaitAbilityDelegate::BindCallBack()
 		}
 	});
 
-	OnAbilityEndle= GetAbilitySystemComponent()->AbilityEndedCallbacks.AddLambda([this]( UGameplayAbility* Ability)
+	OnAbilityEndle= GetAbilitySystemComponent()->OnAbilityEnded.AddLambda([this]( const FAbilityEndedData& Data)
 	{
-			if (GetCurrentAbilitySpec()&& Ability->GetCurrentAbilitySpec()==GetCurrentAbilitySpec())
+			if (GetCurrentAbilitySpec()&& Data.AbilityThatEnded->GetCurrentAbilitySpec()==GetCurrentAbilitySpec())
 				OnAbilityEnd.Broadcast(GetCurrentAbilityInfo());
 		
 	});
@@ -225,7 +225,11 @@ void UAbilityAsync_WaitAbilityDelegate::BindCallBack()
 	OnAbilityFailHandle= GetAbilitySystemComponent()->AbilityFailedCallbacks.AddLambda([this]( const UGameplayAbility* Ability,const FGameplayTagContainer& TagContainer)
 	{
 		if (GetCurrentAbilitySpec() && Ability->GetCurrentAbilitySpec()==GetCurrentAbilitySpec() )
-			OnAbilityFail.Broadcast(GetCurrentAbilityInfo());
+		{
+			FAbilityInfo AbilityInfo =GetCurrentAbilityInfo();
+			AbilityInfo.AbilityFailTagContainer=TagContainer;
+			OnAbilityFail.Broadcast(AbilityInfo);
+		}
 	});
 
 

@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "游戏设计/GAS增强插件（）.md",
+                "file": "Clippings/什么是第一性原理？穿透思维定式？透过现象看透事物本质？指导性.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GAS增强插件（）"
+              "title": "什么是第一性原理？穿透思维定式？透过现象看透事物本质？指导性"
             }
           }
         ],
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "index.md",
+                "file": "Clippings/什么是第一性原理？穿透思维定式？透过现象看透事物本质？指导性.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "index 的大纲"
+              "title": "什么是第一性原理？穿透思维定式？透过现象看透事物本质？指导性 的大纲"
             }
           },
           {
@@ -189,13 +189,23 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
+          },
+          {
+            "id": "6bc68f801130a8b4",
+            "type": "leaf",
+            "state": {
+              "type": "copilot-chat-view",
+              "state": {},
+              "icon": "message-square",
+              "title": "Copilot"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 522
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -209,18 +219,46 @@
       "bases:新建数据库": false,
       "obsidian-git:Open Git source control": false,
       "obsidian-textgenerator-plugin:Generate Text!": false,
-      "obsidian-textgenerator-plugin:Text Generator: Templates Packages Manager": false
+      "obsidian-textgenerator-plugin:Text Generator: Templates Packages Manager": false,
+      "copilot:Open Copilot Chat": false
     }
   },
-  "active": "e772da38f59ed360",
+  "active": "d8cc1b559134927e",
   "lastOpenFiles": [
-    "textgenerator/configs/llm/OpenAI_Chat_4.json.md",
-    "textgenerator/configs/llm",
-    "textgenerator/configs",
-    "textgenerator",
+    "游戏设计/未命名.base",
+    "copilot/copilot-custom-prompts/Rewrite as tweet.md",
+    "copilot/copilot-custom-prompts/Fix grammar and spelling.md",
+    "copilot/copilot-custom-prompts/Make longer.md",
+    "copilot/copilot-custom-prompts/Generate glossary.md",
+    "copilot/copilot-custom-prompts/Clip YouTube Transcript.md",
+    "textgenerator/templates/awesomePrompts/artistadvisorAwesome.md",
+    "游戏设计/GAS增强插件.md",
     "UEC++官方文档学习.md",
-    "游戏设计/GAS增强插件（）.md",
-    "欢迎.md",
-    "游戏设计"
+    "Clippings/什么是第一性原理？穿透思维定式？透过现象看透事物本质？指导性.md",
+    "textgenerator/configs/llm/DeepSeek_152539.json.md",
+    "textgenerator/configs/llm/DeepSeek.json.md",
+    "Clippings/计算机自学指南.md",
+    "copilot/copilot-conversations/Longest_River_Inquiry_Error@20260403_154815.md",
+    "copilot/copilot-conversations",
+    "textgenerator/templates/dalle/artSprayPainted.md",
+    "textgenerator/templates/dalle/artBanksy.md",
+    "textgenerator/templates/dalle/ligAmbient.md",
+    "textgenerator/templates/dalle/artLowPoly.md",
+    "textgenerator/templates/dalle/artSynthwave.md",
+    "textgenerator/templates/dalle/quaTiltShift.md",
+    "textgenerator/templates/dalle/artDigital.md",
+    "textgenerator/templates/dalle/modFanart.md",
+    "textgenerator/templates/dalle/sitNature.md",
+    "textgenerator/templates/dalle/artBallPointPen.md",
+    "textgenerator/templates/dalle/getPhotos.md",
+    "textgenerator/templates/dalle/artNormanRockwell.md",
+    "textgenerator/templates/dalle",
+    "copilot/copilot-custom-prompts",
+    "copilot",
+    "Clippings",
+    "textgenerator/templates/awesomePrompts",
+    "textgenerator/templates/default",
+    "textgenerator/templates",
+    "textgenerator/configs/llm"
   ]
 }

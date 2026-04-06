@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "NativeGameplayTags.h"
 #include "Abilities/GameplayAbility.h"
 #include "EnhanceGameplayAbility.generated.h"
 
@@ -52,12 +53,29 @@ enum class ESkillRemovePocliy :uint8
 };
 
 
+
+
 USTRUCT(BlueprintType)
-struct FSkillInfoAtUi
+struct FAbilityConfigFragment
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly,EditDefaultsOnly)
+	FGameplayTag Tag;
+	
+};
+
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(AbilityConfigFragmentTag_UI);
+
+USTRUCT(BlueprintType)
+struct FAbilityConfigFragment_UI:public FAbilityConfigFragment
 {
 
 	GENERATED_BODY()
-
+	FAbilityConfigFragment_UI()
+	{
+		Tag = AbilityConfigFragmentTag_UI;
+	};
 	UPROPERTY(BlueprintReadOnly,EditDefaultsOnly)
 	FText Name;
 
@@ -66,6 +84,8 @@ struct FSkillInfoAtUi
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FText Describle;
+	
+	
 };
 
 
@@ -81,11 +101,9 @@ class ABILITYSYSTEMEXTRATOOLKIT_API UEnhanceGameplayAbility : public UGameplayAb
 
 public:
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
-	bool bIsShowInSkillBar;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI", meta = (EditCondition = "bIsShowInSkillBar==true"))
-	FSkillInfoAtUi SkillInfoAtUi;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TArray<TInstancedStruct<FAbilityConfigFragment>> AbilityConfigStructs;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnSKillRemoved OnSKillRemoved; 
@@ -94,6 +112,9 @@ public:
 	FOnSKillCommited OnSKillCommited;
 	
 public:
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	bool IsShowInMenu(FAbilityConfigFragment_UI& AbilityConfigFragment_UI);
 
 	
 	UFUNCTION(BlueprintCallable, Category = "Cost")
@@ -108,6 +129,10 @@ public:
 	UFUNCTION(BlueprintPure)
 	FORCEINLINE uint8  GetRemainActiveAccount() const {return ActiveAccount-CurrentActiveAccount;} ;
     
+	/*
+	UFUNCTION(BlueprintPure)
+	bool NowCanActivateAbility() const ;
+	*/
 	
 	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 	virtual  void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
