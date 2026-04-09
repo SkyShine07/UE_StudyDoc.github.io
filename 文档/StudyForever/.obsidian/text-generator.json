@@ -116,8 +116,7 @@
       "repo": "text-gen/tg-excalidraw",
       "core": true,
       "folderName": "excalidrawPackage",
-      "price": 2,
-      "installed": false
+      "price": 2
     }
   },
   "resources": {},

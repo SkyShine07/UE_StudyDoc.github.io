@@ -41,39 +41,40 @@ struct FItemFragmentBase
 
 };
 
+USTRUCT(BlueprintType)
+struct FItemFragment_Effect : public FItemFragmentBase
+{
+	GENERATED_BODY()
+
+	// 使用效果
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<TSoftClassPtr<UGameplayEffect>> Effects;
+	
+	// 授予能力
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<TSoftClassPtr<UGameplayAbility>> Abilities;
+	
+
+};
 // 消耗品片段
 USTRUCT(BlueprintType)
-struct FItemFragment_Consumable : public FItemFragmentBase
+struct FItemFragment_Consumable : public FItemFragment_Effect
 {
 	GENERATED_BODY()
     
 	FItemFragment_Consumable(){FragmentTag=ItemFragmentTag::ConsumableFragmentTag;};
 	
-	// 使用冷却时间(秒)
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(ClampMin="0.0"))
-	float CooldownDuration = 5.0f;
-    
 	// 使用时是否消耗物品
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bConsumeOnUse = true;
-    
-	// 使用效果
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<TSoftClassPtr<UGameplayEffect>> Effect;
 	
 	
-	// 使用动画
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSoftObjectPtr<UAnimMontage> UseAnimation;
-    
-	// 使用音效
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSoftObjectPtr<USoundBase> UseSound;
+
 };
 
 // 装备片段
 USTRUCT(BlueprintType)
-struct FItemFragment_Equipable : public FItemFragmentBase
+struct FItemFragment_Equipable : public FItemFragment_Effect
 {
 	GENERATED_BODY()
 
@@ -84,8 +85,11 @@ struct FItemFragment_Equipable : public FItemFragmentBase
 	
 	// 3D预览模型
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSoftObjectPtr<USkeletalMesh> EquipmentMesh;
+	TSoftObjectPtr<USkeletalMesh> SK_EquipmentMesh;
     
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSoftObjectPtr<UStaticMesh> SM_EquipmentMesh;
+	
 	// 装备的Socket
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FName AttachSocket;
@@ -93,15 +97,6 @@ struct FItemFragment_Equipable : public FItemFragmentBase
 	//装备切换的链接动画示例
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSoftClassPtr<UAnimInstance> LinkABP;
-	
-	// 装备能力
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<TSoftClassPtr<UGameplayAbility>> EquipmentGrantedAbilities;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<TSoftClassPtr<UGameplayEffect>> EquipmentEffects;
-	
-	
 	
 	
 };
@@ -127,11 +122,6 @@ struct FItemFragment_Display : public FItemFragmentBase
 	// 物品图标
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSoftObjectPtr<UTexture2D> Icon;
-    
-
-	// 显示颜色 (用于UI区分)
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FLinearColor DisplayColor = FLinearColor::White;
     
 	// 稀有度等级
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

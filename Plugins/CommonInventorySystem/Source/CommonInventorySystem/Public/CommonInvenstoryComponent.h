@@ -48,7 +48,7 @@ struct FItemDef:public FTableRowBase
 			if (ItemFrag.Get<FItemFragmentBase>().FragmentTag==Tag)
 			{
 				bHasFrag=true;
-				return &ItemFrag.GetMutable<T>();
+				return ItemFrag.GetMutablePtr<T>();
 			};
 		}
 		
@@ -75,14 +75,16 @@ struct FEquipmentSlot
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 ItemID=-1;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	USkeletalMeshComponent* EquipmentSKC;
 	
+	UPROPERTY(BlueprintReadOnly)
+	UStaticMeshComponent* EquipmentSM;
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnItemNumChanged,int32 ,ItemID,int32 ,CurrentNum,int32,AddedNum);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemNumChanged,int32 ,ItemID,int32,AddedNum);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemStackFull,int32 ,ItemID);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemSlotChanged,FEquipmentSlot& ,EquipmentSlot);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemSlotChanged,FEquipmentSlot ,EquipmentSlot);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemSwap) ;
 
 UCLASS(Blueprintable, meta=(BlueprintSpawnableComponent))
@@ -94,8 +96,13 @@ public:
 
 	UCommonInvenstoryComponent();
 	
+
+	
+
 	
 	//******************    背包Items的 增，删，改，查           ****************************
+	
+
 	
 	// 改变Item数量
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
@@ -105,24 +112,26 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void  TrySwapItemByIndex(int32 ItemID_1_index,int32 ItemID_2_index);
 	
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	bool  TryUseItem(int32 ItemID);
-	
-	
 	
 	// 添加物品到背包
 	bool TryAddItem(int32 ItemID , int32 Quantity = 1);
 	bool TryRemoveItem(int32 ItemID, int32 Quantity = 1);
 	
-	// 装备装备、卸载装备
-	bool TryEquipItem(int32 ItemID );
-	bool TryUnEquipItem(int32 ItemID );
 	
+	// 排序
 	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SortItem();
 	
-	//获取装备槽信息
-	FEquipmentSlot*  GetEquipmentSlot(FGameplayTag SlotTag);
+	// 查询Item 所有类型
 	
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Inventory")
+	TArray<FGameplayTag>  GetOwnerAllItemTypes() ;
+	
+	// 查询Item
+	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Inventory")
+	void   GetAllItemsByType( FGameplayTag ItemType,TArray<FItemDef>& OutItems) ;
+
 	// 检查物品是否存在
 	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Inventory")
 	bool HasItem(int32 ItemID, int32& ItemQuantity ) ;
@@ -134,9 +143,8 @@ public:
 	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Inventory")
 	bool  HasAlreadyMaxStack(int32 ItemID) ;
 	
+
 	
-	// 获取Item的属性静态数据片段
-	FItemFragmentBase GetItemFragmentDefByTagFromDT(int32 ItemID, const FGameplayTag& FragmentTag);
 	
 	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Inventory")
 	FItemDef GetItemDefByIDFromDT(int32 ItemID);
@@ -157,9 +165,42 @@ public:
 	//****************************  Item装备 装备功能 ******************
 	
 	
+	// 装备装备、卸载装备
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool TryEquipItem(int32 ItemID );
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool TryUnEquipItem(int32 ItemID );
+	
+	//获取装备槽信息
+	FEquipmentSlot*  GetEquipmentSlot(FGameplayTag SlotTag);
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure,Category = "Inventory")
+	bool CanEquipItem(int32 ItemID);
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure,Category = "Inventory")
+	bool HasEquippedItem(int32 ItemID);
 	
 	
 	
+	//    *********  Comsue Item 的使用
+	
+	/*
+	//使用 Item
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool  TryUseItem(int32 ItemID);
+	*/
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool TryConsumeItem(int32 ItemID , int32 Quantity = 1);
+	
+	
+	//*******  批量应用GE，授予GA *********
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void ApplyGEsAndGrantAbilitiesToOwner(const TArray<TSoftClassPtr<UGameplayEffect>>& GEs,const TArray<TSoftClassPtr<UGameplayAbility>>& Abilities,int32 ItemID);
+	
+	// 获取Item的属性静态数据片段
+	FItemFragmentBase* GetItemFragmentDefByTagFromDT(int32 ItemID, const FGameplayTag& FragmentTag);
 	
 	// 获得背包中实例Item对应Tag的ItemFragment的模板函数
 	template<class T>

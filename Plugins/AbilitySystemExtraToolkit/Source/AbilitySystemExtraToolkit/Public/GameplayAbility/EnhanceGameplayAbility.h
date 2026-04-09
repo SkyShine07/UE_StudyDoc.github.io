@@ -14,13 +14,12 @@
 UENUM()
 enum class ESkillActivePocliy:uint8
 {
-	//主动激活，由玩家控制"
+
 	Positive ,
 	
-	// 输入id激活技能
+
 	InputId,
-	
-	//授予时激活
+
 	OnGive 
 
 };
@@ -41,13 +40,12 @@ UENUM()
 enum class ESkillRemovePocliy :uint8
 {
 	
-	//主动移除，由玩家控制"
+	
 	Positive ,
 
-	//技能释放结束后自动移除
 	OnSkillEnd ,
 
-	//技能激活n次后自动移除
+
 	OnSkillActiveCount 
 
 };
