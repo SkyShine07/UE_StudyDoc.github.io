@@ -8,6 +8,8 @@
 #include "GameFramework/Character.h"
 #include "NativeGameplayTags.h"
 #include "ItemFragment.h"
+#include "Kismet/KismetArrayLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 //UE_DEFINE_GAMEPLAY_TAG_STATIC(RoleWepaonEquipedTag,"Role.State.WeaponEquipped")
 
@@ -110,8 +112,155 @@ bool UCommonInvenstoryComponent::TryConsumeItem(int32 ItemID, int32 Quantity)
 	// 应用GE 和 GA
 	ApplyGEsAndGrantAbilitiesToOwner(ItemFragment_Consumable->Effects,ItemFragment_Consumable->Abilities,ItemID);
 	
-	if (!ItemFragment_Consumable->bConsumeOnUse) return false;
+	if (!ItemFragment_Consumable->bConsumeOnUse) return true;
 	return TryChangedItemNum(ItemID,Quantity*-1);
+	
+}
+
+bool UCommonInvenstoryComponent::TryCraftItem(int32 ItemID)
+{
+	if (!CanCraftItem(ItemID)) return false;
+	
+	bool HasTag;
+	FItemFragment_Craftable* ItemFragment_Craftable=GetItemFragmentRefByTag<FItemFragment_Craftable>(ItemID,ItemFragmentTag::CraftableFragmentTag,HasTag);
+	if (!ItemFragment_Craftable) return false;
+	
+	bool bIsCraft=UKismetMathLibrary::RandomBoolWithWeight(ItemFragment_Craftable->SuccessRate);
+	if (bIsCraft)
+	{
+		// 移除材料，添加目标物品
+		for (auto Element : ItemFragment_Craftable->RequireItemIDAndCountMap)
+		{
+			TryChangedItemNum(Element.Key,-1*Element.Value);
+		}
+		
+		TryChangedItemNum(ItemFragment_Craftable->TargetItemID,1);
+		TryChangedItemNum(ItemID,-1);
+		
+		
+	}
+	
+	
+	
+	OnItemCraft.Broadcast(ItemID,bIsCraft);
+	return bIsCraft;
+	
+}
+
+bool UCommonInvenstoryComponent::CanCraftItem(int32 ItemID)
+{
+	int32 ItemCurrentQuantity;
+	if (!HasItem(ItemID,ItemCurrentQuantity)) return false;
+	
+	bool HasTag;
+	FItemFragment_Craftable* ItemFragment_Craftable=GetItemFragmentRefByTag<FItemFragment_Craftable>(ItemID,ItemFragmentTag::CraftableFragmentTag,HasTag);
+	if (!ItemFragment_Craftable) return false;
+
+	for (auto RequireItemID : ItemFragment_Craftable->RequireItemIDAndCountMap)
+	{
+		int32 LocalItemCurrentQuantity;
+		if (!HasItem(RequireItemID.Key,LocalItemCurrentQuantity)
+			||LocalItemCurrentQuantity<RequireItemID.Value) return false;
+			
+	}
+	
+	return true;
+	
+	
+}
+
+bool UCommonInvenstoryComponent::TryDecomposeItem(int32 ItemID)
+{
+	int32 ItemCurrentQuantity;
+	if (!HasItem(ItemID,ItemCurrentQuantity)) return false;
+	
+	bool HasTag;
+	FItemFragment_Decomposable* ItemFragment_Decomposable=GetItemFragmentRefByTag<FItemFragment_Decomposable>(ItemID,ItemFragmentTag::DecomposableFragmentTag,HasTag);
+	if (!ItemFragment_Decomposable) return false;
+	
+	// 添加碎片Item，移除被分解Item
+	
+	for (auto Element : ItemFragment_Decomposable->DecomposeItemIDs)
+	{
+		TryChangedItemNum(Element.Key,Element.Value);
+	}
+		
+	TryChangedItemNum(ItemID,-1);
+	
+	return true;
+		
+}
+
+void UCommonInvenstoryComponent::DiscardItem(int32 ItemID)
+{
+	int32 ItemCurrentQuantity;
+	if (!HasItem(ItemID,ItemCurrentQuantity)) return ;
+	
+	bool HasTag;
+	FItemFragment_Discardable* ItemFragment_Discardable=GetItemFragmentRefByTag<FItemFragment_Discardable>(ItemID,ItemFragmentTag::DiscardableFragmentTag,HasTag);
+	if (!ItemFragment_Discardable) return ;
+
+	if (!ItemFragment_Discardable->DropItemClass.IsNull()) return ;
+
+	if (UClass* Class=ItemFragment_Discardable->DropItemClass.LoadSynchronous())
+	{
+		FActorSpawnParameters ActorSpawnParameters;
+		AActor* DiscardActor= GetWorld()->SpawnActor<AActor>(Class,GetOwner()->GetActorTransform(),ActorSpawnParameters);
+		
+	}
+	
+	TryChangedItemNum(ItemID,-1);
+	
+	return ;
+	
+}
+
+bool UCommonInvenstoryComponent::TryUpGradeItem(int32 ItemID)
+{
+	if (!CanUpGradeItem(ItemID)) return false;
+	
+	bool HasTag;
+	FItemFragment_Upgradable* ItemFragment_Upgradable=GetItemFragmentRefByTag<FItemFragment_Upgradable>(ItemID,ItemFragmentTag::UpgradableFragmentTag,HasTag);
+	if (!ItemFragment_Upgradable||ItemFragment_Upgradable->CurrentLevel>=ItemFragment_Upgradable->MaxLevel) return false;
+	
+	FItemUpGradeItemInfo* UpGradeItemInfo=ItemFragment_Upgradable->UpgradeInfoAtLevelMap.Find(ItemFragment_Upgradable->CurrentLevel);
+	if (!UpGradeItemInfo) return false;
+
+	
+	for (auto MaterialItemIDAndCount : UpGradeItemInfo->MaterialItemIDAndCountMap)
+	{
+		TryChangedItemNum(MaterialItemIDAndCount.Key,MaterialItemIDAndCount.Value*-1);
+	}
+	
+	ItemFragment_Upgradable->CurrentLevel++;
+	OnItemLevelUp.Broadcast(ItemFragment_Upgradable->CurrentLevel,ItemFragment_Upgradable->MaxLevel);
+	
+	return true;
+	
+}
+
+
+bool UCommonInvenstoryComponent::CanUpGradeItem(int32 ItemID)
+{
+	int32 ItemCurrentQuantity;
+	if (!HasItem(ItemID,ItemCurrentQuantity)) return false;
+	
+	bool HasTag;
+	FItemFragment_Upgradable* ItemFragment_Upgradable=GetItemFragmentRefByTag<FItemFragment_Upgradable>(ItemID,ItemFragmentTag::UpgradableFragmentTag,HasTag);
+	if (!ItemFragment_Upgradable||ItemFragment_Upgradable->CurrentLevel>=ItemFragment_Upgradable->MaxLevel) return false;
+	
+	FItemUpGradeItemInfo* UpGradeItemInfo=ItemFragment_Upgradable->UpgradeInfoAtLevelMap.Find(ItemFragment_Upgradable->CurrentLevel);
+	if (!UpGradeItemInfo) return false;
+
+	
+	for (auto MaterialItemIDAndCount : UpGradeItemInfo->MaterialItemIDAndCountMap)
+	{
+		int32 LocalItemCurrentQuantity;
+		if (!HasItem(MaterialItemIDAndCount.Key,LocalItemCurrentQuantity)
+			||LocalItemCurrentQuantity<MaterialItemIDAndCount.Value) return false;
+	}
+	
+	return true;
 	
 }
 
@@ -314,14 +463,19 @@ bool UCommonInvenstoryComponent::TryEquipItem(int32 ItemID)
 {
 	bool bHasFrag;
 	FItemFragment_Equipable* ItemFragment_Equipable= GetItemFragmentRefByTag<FItemFragment_Equipable>(ItemID,ItemFragmentTag::EquipmentableFragmentTag,bHasFrag);
-	if (!ItemFragment_Equipable||!GetOwner()) return false;
+	if (!bHasFrag||!ItemFragment_Equipable||!GetOwner()) return false;
 	
 	ACharacter* Character=Cast<ACharacter>(GetOwner());
 	if (!Character) return false;
 	USkeletalMeshComponent* CharactorSKC=Character->GetMesh();
 	UAbilitySystemComponent* ASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Character);
 	
-	FEquipmentSlot* EquipmentSlot=GetEquipmentSlot(ItemFragment_Equipable->EquipmentSlot);
+	FEquipmentSlot* EquipmentSlot=	EquipmentSlots.FindByPredicate([&](const FEquipmentSlot& Slot)
+	{
+		return Slot.EquipmentSlot==ItemFragment_Equipable->EquipmentSlot;
+	}
+	);
+	
 	if (!EquipmentSlot||ItemID<=0) return false;
 
 	
@@ -329,7 +483,7 @@ bool UCommonInvenstoryComponent::TryEquipItem(int32 ItemID)
 	
 	if (EquipmentSlot->ItemID==ItemID)
 	{
-		TryUnEquipItem(EquipmentSlot->ItemID);
+		//TryUnEquipItem(EquipmentSlot->ItemID);
 		return false;
 	}
 	
@@ -370,9 +524,9 @@ bool UCommonInvenstoryComponent::TryEquipItem(int32 ItemID)
 	}
 	
 	// 替换动画示例
-	if (!ItemFragment_Equipable->LinkABP.IsNull()&&ItemFragment_Equipable->LinkABP.LoadSynchronous())
+	if (ItemFragment_Equipable->LinkABP)
 	{
-		CharactorSKC->LinkAnimClassLayers(ItemFragment_Equipable->LinkABP.LoadSynchronous());
+		CharactorSKC->LinkAnimClassLayers(ItemFragment_Equipable->LinkABP);
 	};
 	
 	// 应用 GE 和 授予GA
@@ -389,8 +543,8 @@ bool UCommonInvenstoryComponent::TryEquipItem(int32 ItemID)
 
 bool UCommonInvenstoryComponent::TryUnEquipItem(int32 ItemID)
 {
-	bool bHasFrag;
-	FItemFragment_Equipable* ItemFragment_Equipable= GetItemDefByIDFromDT(ItemID).GetItemFragmentRefByTag<FItemFragment_Equipable>(ItemFragmentTag::EquipmentableFragmentTag,bHasFrag);
+	
+	FItemFragment_Equipable* ItemFragment_Equipable= static_cast<FItemFragment_Equipable*>(GetItemFragmentDefByTagFromDT(ItemID,ItemFragmentTag::EquipmentableFragmentTag));
 	if (!ItemFragment_Equipable||!GetOwner()) return false;
 	
 	ACharacter* Character=Cast<ACharacter>(GetOwner());
@@ -398,8 +552,14 @@ bool UCommonInvenstoryComponent::TryUnEquipItem(int32 ItemID)
 	USkeletalMeshComponent* CharactorSKC=Character->GetMesh();
 	UAbilitySystemComponent* ASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Character);
 	
+
 	//更新装备槽信息
-	FEquipmentSlot* EquipmentSlot=GetEquipmentSlot(ItemFragment_Equipable->EquipmentSlot);
+	FEquipmentSlot* EquipmentSlot=	EquipmentSlots.FindByPredicate([&](const FEquipmentSlot& Slot)
+	{
+		return Slot.ItemID==ItemID;
+	}
+	);
+	
 	if (!EquipmentSlot) return false;
 	
 	EquipmentSlot->ItemID=-1;
@@ -416,16 +576,23 @@ bool UCommonInvenstoryComponent::TryUnEquipItem(int32 ItemID)
 	}
 	
 	// 断开动画示例，移除GE和GA
-	CharactorSKC->UnlinkAnimClassLayers(ItemFragment_Equipable->LinkABP.Get());
-
+	if ( ItemFragment_Equipable->LinkABP.Get())
+	{
+		CharactorSKC->UnlinkAnimClassLayers(ItemFragment_Equipable->LinkABP.Get());
+	}
+	
 	if (!AppliedEffects.IsEmpty())
 	{
 		for (auto effectHandlePair : AppliedEffects)
 		{
 			if (effectHandlePair.Value==ItemID && ASC)
 			{
-				ASC->RemoveActiveGameplayEffect(effectHandlePair.Key);
-				AppliedEffects.Remove(effectHandlePair.Key);
+				if (effectHandlePair.Key.IsValid())
+				{
+					ASC->RemoveActiveGameplayEffect(effectHandlePair.Key);
+					AppliedEffects.Remove(effectHandlePair.Key);
+				}
+				
 			}
 			
 		}
@@ -437,7 +604,11 @@ bool UCommonInvenstoryComponent::TryUnEquipItem(int32 ItemID)
 		{
 			if (AbilityPair.Value==ItemID&&ASC)
 			{
-				ASC->ClearAbility(AbilityPair.Key);
+				if (AbilityPair.Key.IsValid())
+				{
+					ASC->ClearAbility(AbilityPair.Key);
+				};
+				
 				GrantAbilities.Remove(AbilityPair.Key);
 			}
 		}
@@ -454,20 +625,6 @@ bool UCommonInvenstoryComponent::TryUnEquipItem(int32 ItemID)
 
 
 
-FEquipmentSlot* UCommonInvenstoryComponent::GetEquipmentSlot(FGameplayTag SlotTag)
-{
-	for (FEquipmentSlot& EquipmentSlotInfo : EquipmentSlots)
-	{
-		if (EquipmentSlotInfo.EquipmentSlot==SlotTag)
-		{
-			return &EquipmentSlotInfo;
-		}
-		
-	}
-	
-	return nullptr;
-	
-}
 
 bool UCommonInvenstoryComponent::CanEquipItem(int32 ItemID)
 {
@@ -494,13 +651,20 @@ void UCommonInvenstoryComponent::ApplyGEsAndGrantAbilitiesToOwner(const TArray<T
 	UAbilitySystemComponent* ASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner());
 	if (!ASC) return ;
 
+	// 获取 该Item 等级
+	bool HasTag;
+	FItemFragment_Upgradable* ItemFragment_Upgradable=GetItemFragmentRefByTag<FItemFragment_Upgradable>(ItemID,ItemFragmentTag::UpgradableFragmentTag,HasTag);
+	int32 ApplyLevel=ItemFragment_Upgradable?ItemFragment_Upgradable->CurrentLevel:1;
 	if (!GEs.IsEmpty())
 	{
 		for (auto GE : GEs)
 		{
 			FActiveGameplayEffectHandle handle=ASC->ApplyGameplayEffectToSelf(
-				GE.LoadSynchronous()->GetDefaultObject<UGameplayEffect>(),1,ASC->MakeEffectContext());
-			AppliedEffects.Add(handle,ItemID);
+			GE.LoadSynchronous()->GetDefaultObject<UGameplayEffect>(),ApplyLevel,ASC->MakeEffectContext());
+			if (handle.IsValid())
+			{
+				AppliedEffects.Add(handle,ItemID);
+			}
 			
 		}
 	}
@@ -510,10 +674,14 @@ void UCommonInvenstoryComponent::ApplyGEsAndGrantAbilitiesToOwner(const TArray<T
 		for (auto& GA : Abilities)
 		{
 			if (GA.IsNull()) continue;
-			FGameplayAbilitySpec AbilitySpec(GA.LoadSynchronous(),1);
+			FGameplayAbilitySpec AbilitySpec(GA.LoadSynchronous(),ApplyLevel);
 			FGameplayAbilitySpecHandle AbilitySpecHandle=ASC->GiveAbility(AbilitySpec);
+
+			if (AbilitySpecHandle.IsValid())
+			{
+				GrantAbilities.Add(AbilitySpecHandle,ItemID);
+			}
 			
-			GrantAbilities.Add(AbilitySpecHandle,ItemID);
 			
 		}
 	}
@@ -656,13 +824,18 @@ FItemDef UCommonInvenstoryComponent::GetItemDefByIDFromDT(int32 ItemID)
 
 bool  UCommonInvenstoryComponent::GetItemFragment_Display(int32 ItemID,FItemFragment_Display& ItemFragment_Display) 
 {
-	bool  bHasFrag;
-	if (GetItemFragmentRefByTag<FItemFragment_Display>(ItemID,ItemFragmentTag::DisplayFragmentTag,bHasFrag))
+
+	if (FItemFragmentBase* ItemFragmentBase=GetItemFragmentDefByTagFromDT(ItemID,ItemFragmentTag::DisplayFragmentTag))
 	{
-		ItemFragment_Display=*GetItemFragmentRefByTag<FItemFragment_Display>(ItemID,ItemFragmentTag::DisplayFragmentTag,bHasFrag);
+		if (FItemFragment_Display* Fragment_Display=static_cast<FItemFragment_Display*>(ItemFragmentBase))
+		{
+			ItemFragment_Display=*Fragment_Display;
+			return true;
+		}
+		return false;
 	}
 	
-	return  GetItemFragmentRefByTag<FItemFragment_Display>(ItemID,ItemFragmentTag::DisplayFragmentTag,bHasFrag)?true:false;
+	return false;
 	
 }
 

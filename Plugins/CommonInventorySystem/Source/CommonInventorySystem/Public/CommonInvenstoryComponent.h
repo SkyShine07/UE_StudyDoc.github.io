@@ -83,8 +83,12 @@ struct FEquipmentSlot
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemNumChanged,int32 ,ItemID,int32,AddedNum);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemLevelUp,int32 ,CurrentLevel,int32 ,MaxLevel);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemCraft,int32 ,ItemID,bool,Success);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemStackFull,int32 ,ItemID);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemSlotChanged,FEquipmentSlot ,EquipmentSlot);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemSwap) ;
 
 UCLASS(Blueprintable, meta=(BlueprintSpawnableComponent))
@@ -171,9 +175,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	bool TryUnEquipItem(int32 ItemID );
 	
-	//获取装备槽信息
-	FEquipmentSlot*  GetEquipmentSlot(FGameplayTag SlotTag);
-	
+
 	UFUNCTION(BlueprintCallable, BlueprintPure,Category = "Inventory")
 	bool CanEquipItem(int32 ItemID);
 	
@@ -192,6 +194,36 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	bool TryConsumeItem(int32 ItemID , int32 Quantity = 1);
+	
+	
+	//    *********  物品的合成 ***********
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool TryCraftItem(int32 ItemID);
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool CanCraftItem(int32 ItemID);
+	
+	
+	// *********** 物品分解 **********
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool TryDecomposeItem(int32 ItemID);
+	
+	
+	// ********** 丢弃物品 ********
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void DiscardItem(int32 ItemID);
+
+	
+	// ***********  物品升星 ******
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool TryUpGradeItem(int32 ItemID);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool CanUpGradeItem(int32 ItemID);
 	
 	
 	//*******  批量应用GE，授予GA *********
@@ -225,7 +257,7 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 	TArray<FItemDef> Items;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FEquipmentSlot> EquipmentSlots;
 	
 private:
@@ -236,19 +268,25 @@ private:
 	
 public:
 	
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FOnItemNumChanged OnItemNumChanged;
+
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	FOnItemLevelUp OnItemLevelUp;
 	
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	FOnItemCraft OnItemCraft;
+	
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FOnItemStackFull OnItemStackFull;
 
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FOnItemSwap OnItemSwap;
 	
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FOnItemSlotChanged OnItemEquiped;
 	
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
 	FOnItemSlotChanged OnItemUnEquiped;
 };
 
