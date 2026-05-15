@@ -8,31 +8,15 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7849cba896644f3b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "UI设计/设计师必备图标指南_陈亚-站酷ZCOOL.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "设计师必备图标指南_陈亚-站酷ZCOOL"
-            }
-          },
-          {
             "id": "d8cc1b559134927e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "mindmapView",
               "state": {
-                "file": "UI设计/UI色彩总结—如何满足不同界面的配色需求_全栈设计交流-站酷ZCOOL 1.md",
-                "mode": "source",
-                "source": false
+                "file": "数值设计/数值策划脑图.md"
               },
-              "icon": "lucide-file",
-              "title": "UI色彩总结—如何满足不同界面的配色需求_全栈设计交流-站酷ZCOOL 1"
+              "icon": "blocks",
+              "title": "数值策划脑图"
             }
           },
           {
@@ -235,47 +219,54 @@
       "obsidian-git:Open Git source control": false,
       "obsidian-textgenerator-plugin:Generate Text!": false,
       "obsidian-textgenerator-plugin:Text Generator: Templates Packages Manager": false,
-      "copilot:Open Copilot Chat": false
+      "copilot:Open Copilot Chat": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "e772da38f59ed360",
+  "active": "d8cc1b559134927e",
   "lastOpenFiles": [
-    "UI设计/UI界面优化改版35个小妙招_陈亚-站酷ZCOOL.md",
-    "UI设计/设计师必备图标指南_陈亚-站酷ZCOOL.md",
-    "UI设计/8000字干货分享教你从0到1搭建制作一套UI规范并落地_朱耀汉-站酷ZCOOL.md",
-    "UEC++官方文档学习.md",
+    "Books/游戏数值百宝书：成为优秀的数值策划 (袁兆阳) (Z-Library).pdf",
+    "数值设计/数值策划脑图.md",
+    "数值设计/数值策划.md",
+    "Excalidraw/数字百宝箱：游戏数值策划.md",
     "UI设计/UI色彩总结—如何满足不同界面的配色需求_全栈设计交流-站酷ZCOOL 1.md",
+    "Books/游戏关卡设计概论.pdf",
+    "Books/体验引擎：游戏设计全景探秘 a guide to engineering experiences.pdf",
+    "Books/游戏设计的236个技巧.pdf",
+    "Books/游戏UI设计原则与实例指导手册(第2版).epub",
+    "数值设计/Attachments/IO结构.png",
+    "Excalidraw",
+    "数值设计/Attachments/怪物属性修正参考表.png",
+    "数值设计/Attachments/战斗流程.png",
+    "数值设计/Attachments/伤害流程.png",
+    "数值设计/Attachments/技能流程.png",
     "Clippings/什么是第一性原理？穿透思维定式？透过现象看透事物本质？指导性.md",
+    "数值设计/Attachments/通用属性续.png",
+    "数值设计/Attachments/通用属性.png",
+    "数值设计/Attachments",
+    "游戏设计/GAS增强插件.md",
+    "数值设计",
+    "Books/游戏造梦师游戏策划职业入门教程.pdf",
+    "Books/平衡掌控者 游戏数值经济设计.pdf",
+    "UI设计/设计师必备图标指南_陈亚-站酷ZCOOL.md",
+    "欢迎.md",
+    "UI设计/8000字干货分享教你从0到1搭建制作一套UI规范并落地_朱耀汉-站酷ZCOOL.md",
+    "textgenerator/templates/awesomePrompts/gaslighterAwesome.md",
+    "UI设计/UI界面优化改版35个小妙招_陈亚-站酷ZCOOL.md",
+    "UEC++官方文档学习.md",
     "Clippings/计算机自学指南.md",
     "UI设计/游戏UI从无到有_heand843-站酷ZCOOL.md",
     "UI设计/游戏图标入门—色彩篇_全栈设计交流-站酷ZCOOL.md",
     "UI设计/Attachments/Pasted image 20260416161949.png",
-    "UI设计/Attachments",
     "UI设计/UI色彩总结—如何满足不同界面的配色需求_全栈设计交流-站酷ZCOOL.md",
-    "UI设计",
-    "游戏设计/未命名.base",
     "copilot/copilot-custom-prompts/Rewrite as tweet.md",
     "copilot/copilot-custom-prompts/Fix grammar and spelling.md",
     "copilot/copilot-custom-prompts/Make longer.md",
     "copilot/copilot-custom-prompts/Generate glossary.md",
     "copilot/copilot-custom-prompts/Clip YouTube Transcript.md",
     "textgenerator/templates/awesomePrompts/artistadvisorAwesome.md",
-    "游戏设计/GAS增强插件.md",
     "textgenerator/configs/llm/DeepSeek_152539.json.md",
     "textgenerator/configs/llm/DeepSeek.json.md",
-    "copilot/copilot-conversations/Longest_River_Inquiry_Error@20260403_154815.md",
-    "copilot/copilot-conversations",
-    "textgenerator/templates/dalle/artSprayPainted.md",
-    "textgenerator/templates/dalle/artBanksy.md",
-    "textgenerator/templates/dalle/ligAmbient.md",
-    "textgenerator/templates/dalle/artLowPoly.md",
-    "textgenerator/templates/dalle/artSynthwave.md",
-    "textgenerator/templates/dalle/quaTiltShift.md",
-    "textgenerator/templates/dalle",
-    "copilot/copilot-custom-prompts",
-    "copilot",
-    "Clippings",
-    "textgenerator/templates/awesomePrompts",
-    "textgenerator/templates/default"
+    "copilot/copilot-conversations/Longest_River_Inquiry_Error@20260403_154815.md"
   ]
 }
